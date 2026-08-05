@@ -141,16 +141,16 @@ import re
 
 # --- 1. 配置LLM客户端 ---
 # 请根据您使用的服务, 将这里替换成对应的凭证和地址
-API_KEY = "sk-ZSnHzhCwriLy2Bm5B7F2Eb7512224bEe91A14f8eB6B9873b"
-BASE_URL = "https://aihubmix.com"
-MODEL_ID = "coding-glm-4.7-free"
+API_KEY = "ms-fdc44d27-d66b-4bce-8e4f-b62184137bd7"
+BASE_URL = "https://api-inference.modelscope.cn/v1"
+MODEL_ID = "deepseek-ai/DeepSeek-V4-Flash-0731"
 TAVILY_API_KEY = "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"
 os.environ["TAVILY_API_KEY"] = "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"
 
 llm = OpenAICompatibleClient(model=MODEL_ID, api_key=API_KEY, base_url=BASE_URL)
 
 # --- 2. 初始化 ---
-user_prompt = "你好, 请帮我查询一下今天北京的天气, 然后根据天气推荐一个合适的旅游景点."
+user_prompt = "你好, 请帮我查询一下今天上海的天气, 然后根据天气推荐一个合适的旅游景点."
 prompt_history = [f"用户请求: {user_prompt}"]
 
 print(f"用户输入: {user_prompt}\n" + "=" * 40)
