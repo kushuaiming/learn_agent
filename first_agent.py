@@ -141,9 +141,13 @@ import re
 
 # --- 1. 配置LLM客户端 ---
 # 请根据您使用的服务, 将这里替换成对应的凭证和地址
-API_KEY = "ms-fdc44d27-d66b-4bce-8e4f-b62184137bd7"
-BASE_URL = "https://api-inference.modelscope.cn/v1"
-MODEL_ID = "deepseek-ai/DeepSeek-V4-Flash-0731"
+API_KEY = "sk-83513116e2ba4997a1cd9bce23c1b7c7"
+BASE_URL = "https://api.deepseek.com"
+MODEL_ID = "deepseek-v4-flash"
+
+# API_KEY = "ms-fdc44d27-d66b-4bce-8e4f-b62184137bd7"
+# BASE_URL = "https://api-inference.modelscope.cn/v1"
+# MODEL_ID = "deepseek-ai/DeepSeek-V4-Flash-0731"
 TAVILY_API_KEY = "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"
 os.environ["TAVILY_API_KEY"] = "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"
 
