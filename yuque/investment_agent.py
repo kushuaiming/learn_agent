@@ -162,7 +162,7 @@ def fetch_macro_data(now: datetime) -> Dict[str, pd.DataFrame]:
             if df is not None and not df.empty:
                 result[key] = df
         except Exception as exc:  # noqa: BLE001
-            print(f"[Tushare] {key} 获取失败: {exc}")
+            print(f"Tushare fail to get {key} exception: {exc}")
 
     _safe("cpi", pro.cn_cpi, start_m=start_m, end_m=end_m)
     _safe("ppi", pro.cn_ppi, start_m=start_m, end_m=end_m)
@@ -360,13 +360,10 @@ def fallback_analysis(data: Dict[str, pd.DataFrame]) -> str:
     return "\n".join(lines)
 
 
-# =====================================================================
-# 主流程
-# =====================================================================
 def main():
     now = datetime.now()
     date_title = f"{now.strftime('%Y/%m/%d')} 日报"
-    print(f"目标文档标题: {date_title}")
+    print(f"date_title: {date_title}")
 
     # 1. 拉取宏观数据
     print("=" * 50)
@@ -390,10 +387,10 @@ def main():
     yuque = YuqueClient(YU_QUE_ID)
     repo = yuque.find_repo(BOOK_NAME)
     namespace = repo["namespace"]
-    print(f"      知识库: {repo['name']} ({namespace})")
+    print(f"      knowledge Base: {repo['name']} ({namespace})")
 
     # 目录树 (同时用于幂等检查: 若同名文档已存在则不再重复创建)
-    toc = yuque.get_toc(namespace)
+    toc = yuque.get_toc(namespace) # toc means table of contents
     dir_node = next((n for n in toc if n.get("title") == DIR_TITLE), None)
     if dir_node is None:
         raise RuntimeError(f"知识库中未找到目录: {DIR_TITLE}")
