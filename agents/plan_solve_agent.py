@@ -2,10 +2,10 @@
 
 import ast
 from typing import Optional, List, Dict, Any
-from ..core.agent import Agent
-from ..core.llm import HelloAgentsLLM
-from ..core.config import Config
-from ..core.message import Message
+from core.agent import Agent
+from core.llm import HelloAgentsLLM
+from core.config import Config
+from core.message import Message
 
 # 默认规划器提示词模板
 DEFAULT_PLANNER_PROMPT = """

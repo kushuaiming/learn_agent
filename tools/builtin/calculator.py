@@ -6,7 +6,7 @@ import math
 from typing import Dict, Any
 
 from ..base import Tool
-from ...core.exceptions import ToolException
+from core.exceptions import ToolException
 
 class CalculatorTool(Tool):
     """Python计算器工具"""

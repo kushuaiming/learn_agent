@@ -1,10 +1,10 @@
 """Reflection Agent实现 - 自我反思与迭代优化的智能体"""
 
 from typing import Optional, List, Dict, Any
-from ..core.agent import Agent
-from ..core.llm import HelloAgentsLLM
-from ..core.config import Config
-from ..core.message import Message
+from core.agent import Agent
+from core.llm import HelloAgentsLLM
+from core.config import Config
+from core.message import Message
 
 # 默认提示词模板
 DEFAULT_PROMPTS = {

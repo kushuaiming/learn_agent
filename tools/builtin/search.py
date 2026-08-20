@@ -4,7 +4,7 @@ import os
 from typing import Optional, Dict, Any, List
 
 from ..base import Tool, ToolParameter
-from ...core.exceptions import HelloAgentsException
+from core.exceptions import HelloAgentsException
 
 class SearchTool(Tool):
     """

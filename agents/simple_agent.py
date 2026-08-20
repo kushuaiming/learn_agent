@@ -2,10 +2,10 @@
 
 from typing import Optional, Iterator
 
-from ..core.agent import Agent
-from ..core.llm import HelloAgentsLLM
-from ..core.config import Config
-from ..core.message import Message
+from core.agent import Agent
+from core.llm import HelloAgentsLLM
+from core.config import Config
+from core.message import Message
 
 class SimpleAgent(Agent):
     """简单的对话Agent"""
