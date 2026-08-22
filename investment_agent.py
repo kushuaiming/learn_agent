@@ -241,15 +241,13 @@ def build_report_body(
 ) -> str:
     """组装最终写入语雀的 Markdown 报告."""
     parts: List[str] = []
-    parts.append(f"# {date_title}")
-    parts.append("")
     parts.append(
         f"> 数据来源: Tushare  |  生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     )
     parts.append("")
 
     # 数据速览: 每个数据集取最新一条的关键指标
-    parts.append("## 一、核心数据速览")
+    parts.append("# 1. 核心数据速览")
     parts.append("")
     for key in _SECTION_COLUMNS:
         if key not in data:
@@ -268,7 +266,7 @@ def build_report_body(
     parts.append("")
 
     # 详细数据表
-    parts.append("## 二、详细数据")
+    parts.append("# 2. 详细数据")
     parts.append("")
     for key in _SECTION_COLUMNS:
         if key not in data:
@@ -279,7 +277,7 @@ def build_report_body(
         parts.append("")
 
     # 分析
-    parts.append("## 三、宏观分析与展望")
+    parts.append("# 3. 宏观分析与展望")
     parts.append("")
     parts.append(analysis)
     parts.append("")
