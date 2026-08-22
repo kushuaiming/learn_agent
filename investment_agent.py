@@ -19,12 +19,8 @@ import tushare as ts
 from dotenv import load_dotenv
 from openai import OpenAI
 
-# --- 0. 加载 .env (脚本位于 yuque/ 目录, .env 位于上一级目录) ---
-_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-_ENV_PATH = os.path.join(os.path.dirname(_BASE_DIR), ".env")
-load_dotenv(_ENV_PATH)
+load_dotenv()
 
-# --- 1. 读取 Access ID ---
 YU_QUE_ID = os.getenv("YU_QUE_ID", "").strip()
 TU_SHARE_ID = os.getenv("TU_SHARE_ID", "").strip()
 LLM_API_KEY = os.getenv("LLM_API_KEY", "").strip()
@@ -32,16 +28,11 @@ LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://api.deepseek.com").strip()
 LLM_MODEL_ID = os.getenv("LLM_MODEL_ID", "deepseek-v4-flash").strip()
 
 YUQUE_API_BASE = "https://www.yuque.com/api/v2"
-BOOK_NAME = "200 - 社会科学"  # 目标知识库
-DIR_TITLE = "投资报告"  # 目标目录 (知识库目录树中的分组节点)
+BOOK_NAME = "200 - 社会科学"
+DIR_TITLE = "投资报告"
 
 
-# =====================================================================
-# 语雀客户端
-# =====================================================================
 class YuqueClient:
-    """封装语雀开放 API v2 的最小客户端."""
-
     def __init__(self, token: str):
         if not token:
             raise ValueError("缺少 YU_QUE_ID, 请检查 .env 文件.")
@@ -390,7 +381,7 @@ def main():
     print(f"      knowledge Base: {repo['name']} ({namespace})")
 
     # 目录树 (同时用于幂等检查: 若同名文档已存在则不再重复创建)
-    toc = yuque.get_toc(namespace) # toc means table of contents
+    toc = yuque.get_toc(namespace)  # toc means table of contents
     dir_node = next((n for n in toc if n.get("title") == DIR_TITLE), None)
     if dir_node is None:
         raise RuntimeError(f"知识库中未找到目录: {DIR_TITLE}")
