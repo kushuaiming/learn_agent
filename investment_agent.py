@@ -3,7 +3,7 @@
 
 功能:
 1. 读取 .env 中的 Access ID (YU_QUE_ID / TU_SHARE_ID / LLM_*).
-2. 通过 Tushare 拉取中国宏观数据 (CPI/PPI/货币供应/GDP/PMI/SHIBOR).
+2. 通过 Tushare 拉取中国宏观数据 (CPI/PPI/货币供应/GDP/PMI/SHIBOR) 及黄金每日收盘价.
 3. 使用 LLM 对宏观数据进行分析.
 4. 在语雀知识库 "200 - 社会科学" 的 "投资报告" 目录下新建一个文档,
    文件名形如 "2026/08/16 日报", 并把宏观数据分析写入该文档.
@@ -162,6 +162,22 @@ def fetch_macro_data(now: datetime) -> Dict[str, pd.DataFrame]:
     _safe("pmi", pro.cn_pmi, start_m=start_m, end_m=end_m)
     _safe("shibor", pro.shibor, start_date=start_d, end_date=end_d)
 
+    # 黄金: 上海金交所现货基准 Au99.99 每日收盘价 (change=涨跌额, pct_chg 自行换算为 %)
+    def _fetch_gold():
+        gold = pro.sge_daily(
+            ts_code="Au99.99", start_date=start_d, end_date=end_d
+        )
+        if gold is None or gold.empty:
+            return None
+        gold = gold.copy()
+        pre_close = gold["close"] - gold["change"]
+        gold["pct_chg"] = (gold["change"] / pre_close * 100).replace(
+            [float("inf"), float("-inf")], float("nan")
+        )
+        return gold
+
+    _safe("gold", _fetch_gold)
+
     if not result:
         raise RuntimeError(
             "未能从 Tushare 获取到任何宏观数据, 请检查 TU_SHARE_ID 与积分权限."
@@ -206,6 +222,7 @@ _SECTION_COLUMNS = {
     "gdp": ["quarter", "gdp_yoy", "pi_yoy", "si_yoy", "ti_yoy"],
     "pmi": ["MONTH", "PMI010000"],
     "shibor": ["date", "on", "1w", "1m", "3m", "6m", "1y"],
+    "gold": ["trade_date", "close", "change", "pct_chg"],
 }
 
 _SECTION_TITLES = {
@@ -215,6 +232,7 @@ _SECTION_TITLES = {
     "gdp": "国内生产总值 (GDP)",
     "pmi": "制造业采购经理指数 (PMI)",
     "shibor": "上海银行间同业拆放利率 (SHIBOR)",
+    "gold": "上海金交所黄金现货收盘价 (Au99.99)",
 }
 
 
