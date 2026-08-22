@@ -1,0 +1,2 @@
+dotenv
+lark-oapi>=1.4.8
